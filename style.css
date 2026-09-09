@@ -1,0 +1,550 @@
+/* ================================
+   GENERAL
+================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #080808;
+    color: white;
+}
+
+
+/* ================================
+   HEADER
+================================ */
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+
+    background: rgba(0, 0, 0, 0.95);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 18px 6%;
+
+    border-bottom: 1px solid #222;
+}
+
+.logo h1 {
+    color: white;
+    font-size: 24px;
+    letter-spacing: 3px;
+}
+
+.logo h1 span {
+    color: gold;
+}
+
+.logo small {
+    color: #aaa;
+    letter-spacing: 4px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+
+    margin-left: 30px;
+
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: gold;
+}
+
+.menu-btn {
+    display: none;
+
+    background: none;
+    border: none;
+
+    color: gold;
+    font-size: 28px;
+
+    cursor: pointer;
+}
+
+
+/* ================================
+   HERO
+================================ */
+
+.hero {
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            rgba(0,0,0,0.65),
+            rgba(0,0,0,0.8)
+        ),
+        url("https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1600&auto=format&fit=crop");
+
+    background-size: cover;
+    background-position: center;
+
+    display: flex;
+    align-items: center;
+
+    padding: 120px 8%;
+}
+
+.hero-content {
+    max-width: 700px;
+}
+
+.small-title,
+.section-label {
+    color: gold;
+
+    font-size: 14px;
+
+    letter-spacing: 4px;
+
+    font-weight: bold;
+
+    margin-bottom: 20px;
+}
+
+.hero h2 {
+    font-size: clamp(45px, 7vw, 85px);
+
+    line-height: 1;
+
+    margin-bottom: 25px;
+}
+
+.hero h2 span {
+    color: gold;
+}
+
+.hero p {
+    font-size: 20px;
+
+    color: #ddd;
+
+    margin-bottom: 30px;
+
+    line-height: 1.6;
+}
+
+
+/* ================================
+   BUTTONS
+================================ */
+
+.btn {
+    display: inline-block;
+
+    padding: 15px 30px;
+
+    background: gold;
+
+    color: black;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    border-radius: 4px;
+
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: white;
+
+    transform: translateY(-3px);
+}
+
+
+/* ================================
+   BRAND
+================================ */
+
+.brand {
+    text-align: center;
+
+    padding: 100px 20px;
+
+    background: #0d0d0d;
+}
+
+.brand h2 {
+    color: gold;
+
+    font-size: 45px;
+
+    margin-bottom: 15px;
+}
+
+.brand p {
+    color: #ccc;
+
+    margin-bottom: 30px;
+}
+
+.brand img {
+    width: 280px;
+
+    max-width: 90%;
+
+    border-radius: 15px;
+
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.25);
+}
+
+
+/* ================================
+   PRODUCTS
+================================ */
+
+.products {
+    padding: 100px 6%;
+
+    text-align: center;
+}
+
+.products h2,
+.contact h2,
+.about h2 {
+    font-size: 42px;
+
+    margin-bottom: 50px;
+}
+
+.product-container {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(240px, 1fr));
+
+    gap: 25px;
+}
+
+.card {
+    background: #151515;
+
+    border: 1px solid #242424;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    transition: 0.4s;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+
+    border-color: gold;
+
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.15);
+}
+
+.image-box {
+    overflow: hidden;
+}
+
+.card img {
+    width: 100%;
+
+    height: 320px;
+
+    object-fit: cover;
+
+    transition: 0.5s;
+}
+
+.card:hover img {
+    transform: scale(1.08);
+}
+
+.card-content {
+    padding: 25px;
+}
+
+.card h3 {
+    color: gold;
+
+    font-size: 22px;
+
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #bbb;
+
+    line-height: 1.5;
+
+    margin-bottom: 15px;
+}
+
+.card h4 {
+    font-size: 20px;
+
+    margin-bottom: 20px;
+}
+
+.order-btn {
+    width: 100%;
+
+    padding: 13px;
+
+    border: none;
+
+    background: gold;
+
+    color: black;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    border-radius: 4px;
+
+    transition: 0.3s;
+}
+
+.order-btn:hover {
+    background: white;
+}
+
+
+/* ================================
+   ABOUT
+================================ */
+
+.about {
+    padding: 110px 20px;
+
+    text-align: center;
+
+    background: #111;
+}
+
+.about-content {
+    max-width: 800px;
+
+    margin: auto;
+}
+
+.about h2 {
+    color: gold;
+
+    margin-bottom: 25px;
+}
+
+.about p:not(.section-label) {
+    color: #ccc;
+
+    line-height: 1.8;
+
+    font-size: 18px;
+
+    margin-bottom: 30px;
+}
+
+
+/* ================================
+   CONTACT
+================================ */
+
+.contact {
+    padding: 100px 20px;
+
+    text-align: center;
+}
+
+.contact h2 {
+    color: gold;
+}
+
+.contact-info p {
+    margin: 18px 0;
+
+    font-size: 18px;
+}
+
+.contact-info a {
+    color: gold;
+
+    text-decoration: none;
+}
+
+.whatsapp-btn {
+    display: inline-block;
+
+    margin-top: 20px;
+
+    background: #25D366;
+
+    color: white !important;
+
+    padding: 15px 25px;
+
+    border-radius: 5px;
+
+    font-weight: bold;
+}
+
+
+/* ================================
+   FOOTER
+================================ */
+
+footer {
+    background: black;
+
+    text-align: center;
+
+    padding: 40px 20px;
+
+    border-top: 1px solid #222;
+}
+
+footer h3 {
+    color: gold;
+
+    margin-bottom: 10px;
+}
+
+footer p {
+    color: #888;
+
+    margin: 8px 0;
+}
+
+
+/* ================================
+   FLOATING WHATSAPP
+================================ */
+
+.floating-whatsapp {
+    position: fixed;
+
+    right: 25px;
+    bottom: 25px;
+
+    width: 60px;
+    height: 60px;
+
+    background: #25D366;
+
+    color: white;
+
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-decoration: none;
+
+    font-size: 28px;
+
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+
+    z-index: 999;
+
+    transition: 0.3s;
+}
+
+.floating-whatsapp:hover {
+    transform: scale(1.1);
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 768px) {
+
+    header {
+        padding: 15px 5%;
+    }
+
+    nav {
+        position: absolute;
+
+        top: 100%;
+
+        left: 0;
+
+        width: 100%;
+
+        background: black;
+
+        display: none;
+
+        flex-direction: column;
+
+        padding: 20px;
+    }
+
+    nav.active {
+        display: flex;
+    }
+
+    nav a {
+        margin: 15px 0;
+
+        text-align: center;
+    }
+
+    .menu-btn {
+        display: block;
+    }
+
+    .hero {
+        text-align: center;
+
+        justify-content: center;
+
+        padding: 120px 20px 60px;
+    }
+
+    .hero h2 {
+        font-size: 50px;
+    }
+
+    .hero p {
+        font-size: 17px;
+    }
+
+    .products,
+    .contact,
+    .about,
+    .brand {
+        padding: 70px 20px;
+    }
+
+    .products h2,
+    .contact h2,
+    .about h2 {
+        font-size: 34px;
+    }
+
+    .card img {
+        height: 280px;
+    }
+
+  }
