@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mark Holdings Boutique</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">
+            <h1>MARK <span>HOLDINGS</span></h1>
+            <small>MEN'S BOUTIQUE</small>
+        </div>
+
+        <nav id="nav">
+            <a href="#home">Home</a>
+            <a href="#products">Shop</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </nav>
+
+        <button class="menu-btn" id="menuBtn">☰</button>
+    </header>
+
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+
+        <div class="hero-content">
+
+            <p class="small-title">WELCOME TO MARK HOLDINGS</p>
+
+            <h2>STYLE THAT<br><span>DEFINES YOU</span></h2>
+
+            <p>
+                Premium men's fashion designed for confidence,
+                comfort and style.
+            </p>
+
+            <a href="#products" class="btn">SHOP COLLECTION</a>
+
+        </div>
+
+    </section>
+
+
+    <!-- LOGO -->
+    <section class="brand" id="logo">
+
+        <p class="section-label">OUR BRAND</p>
+
+        <h2>MARK HOLDINGS</h2>
+
+        <p>
+            Fashion • Quality • Confidence
+        </p>
+
+        <img src="logo.png" alt="Mark Holdings Boutique Logo">
+
+    </section>
+
+
+    <!-- PRODUCTS -->
+    <section class="products" id="products">
+
+        <p class="section-label">OUR COLLECTION</p>
+
+        <h2>FEATURED PRODUCTS</h2>
+
+        <div class="product-container">
+
+            <!-- JEANS -->
+            <div class="card">
+
+                <div class="image-box">
+                    <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=1200&auto=format&fit=crop"
+                         alt="Men's Jeans">
+                </div>
+
+                <div class="card-content">
+                    <h3>Premium Jeans</h3>
+
+                    <p>Modern and comfortable men's jeans.</p>
+
+                    <h4>KSh 2,500</h4>
+
+                    <button class="order-btn"
+                        onclick="orderProduct('Premium Jeans', '2500')">
+                        ORDER NOW
+                    </button>
+                </div>
+
+            </div>
+
+
+            <!-- T-SHIRT -->
+            <div class="card">
+
+                <div class="image-box">
+                    <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1200&auto=format&fit=crop"
+                         alt="Men's T-Shirt">
+                </div>
+
+                <div class="card-content">
+                    <h3>Premium T-Shirt</h3>
+
+                    <p>Comfortable shirts for everyday style.</p>
+
+                    <h4>KSh 1,500</h4>
+
+                    <button class="order-btn"
+                        onclick="orderProduct('Premium T-Shirt', '1500')">
+                        ORDER NOW
+                    </button>
+                </div>
+
+            </div>
+
+
+            <!-- SHOES -->
+            <div class="card">
+
+                <div class="image-box">
+                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200&auto=format&fit=crop"
+                         alt="Men's Shoes">
+                </div>
+
+                <div class="card-content">
+                    <h3>Luxury Sneakers</h3>
+
+                    <p>Stylish sneakers for every occasion.</p>
+
+                    <h4>KSh 4,500</h4>
+
+                    <button class="order-btn"
+                        onclick="orderProduct('Luxury Sneakers', '4500')">
+                        ORDER NOW
+                    </button>
+                </div>
+
+            </div>
+
+
+            <!-- JERSEY -->
+            <div class="card">
+
+                <div class="image-box">
+                    <img src="https://images.unsplash.com/photo-1523398002811-999ca8dec234?q=80&w=1200&auto=format&fit=crop"
+                         alt="Football Jersey">
+                </div>
+
+                <div class="card-content">
+                    <h3>Football Jerseys</h3>
+
+                    <p>Latest jerseys for football lovers.</p>
+
+                    <h4>KSh 2,000</h4>
+
+                    <button class="order-btn"
+                        onclick="orderProduct('Football Jersey', '2000')">
+                        ORDER NOW
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ABOUT -->
+    <section class="about" id="about">
+
+        <div class="about-content">
+
+            <p class="section-label">ABOUT US</p>
+
+            <h2>FASHION WITH CONFIDENCE</h2>
+
+            <p>
+                Mark Holdings Boutique is a men's fashion brand based
+                in Mombasa, Kenya. We provide quality jeans, T-shirts,
+                shoes and jerseys for men who want to look confident
+                and stylish.
+            </p>
+
+            <a href="#contact" class="btn">CONTACT US</a>
+
+        </div>
+
+    </section>
+
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+
+        <p class="section-label">GET IN TOUCH</p>
+
+        <h2>CONTACT US</h2>
+
+        <div class="contact-info">
+
+            <p>📍 Mombasa, Kenya</p>
+
+            <p>
+                📞
+                <a href="tel:0706035845">
+                    0706035845
+                </a>
+            </p>
+
+            <p>
+                📧
+                <a href="mailto:kipronooizak@gmail.com">
+                    kipronooizak@gmail.com
+                </a>
+            </p>
+
+            <a class="whatsapp-btn"
+               href="https://wa.me/254706035845"
+               target="_blank">
+                💬 CHAT ON WHATSAPP
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <h3>MARK HOLDINGS BOUTIQUE</h3>
+
+        <p>
+            Style • Quality • Confidence
+        </p>
+
+        <p>
+            © 2026 Mark Holdings Boutique. All Rights Reserved.
+        </p>
+
+    </footer>
+
+
+    <!-- FLOATING WHATSAPP -->
+    <a href="https://wa.me/254706035845"
+       class="floating-whatsapp"
+       target="_blank">
+        💬
+    </a>
+
+
+    <!-- JAVASCRIPT -->
+    <script src="script.js"></script>
+
+</body>
+  </html>
