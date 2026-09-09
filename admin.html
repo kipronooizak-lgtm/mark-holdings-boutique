@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mark Holdings - Admin</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: white;
+  padding: 20px;
+}
+
+h1 {
+  color: #ffd400;
+  text-align: center;
+}
+
+.container {
+  max-width: 500px;
+  margin: auto;
+}
+
+input, select, button {
+  width: 100%;
+  padding: 14px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+}
+
+button {
+  background: #ffd400;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.product {
+  background: #222;
+  padding: 15px;
+  margin-top: 15px;
+  border-radius: 10px;
+}
+
+.product img {
+  width: 100%;
+  max-height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.stock {
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.in {
+  color: #00ff88;
+}
+
+.out {
+  color: #ff4444;
+}
+
+.delete {
+  background: #ff4444;
+  color: white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>MARK HOLDINGS</h1>
+<h2>Product Admin</h2>
+
+<input type="text" id="name" placeholder="Product name">
+
+<input type="number" id="price" placeholder="Price in KSh">
+
+<input type="file" id="image" accept="image/*">
+
+<select id="stock">
+  <option value="in">IN STOCK</option>
+  <option value="out">OUT OF STOCK</option>
+</select>
+
+<button onclick="addProduct()">ADD PRODUCT</button>
+
+<h2>Your Products</h2>
+
+<div id="products"></div>
+
+</div>
+
+<script>
+let products = JSON.parse(localStorage.getItem("products")) || [];
+
+function addProduct() {
+
+  let name = document.getElementById("name").value;
+  let price = document.getElementById("price").value;
+  let stock = document.getElementById("stock").value;
+  let image = document.getElementById("image").files[0];
+
+  if (!name || !price || !image) {
+    alert("Please enter product name, price and picture");
+    return;
+  }
+
+  let reader = new FileReader();
+
+  reader.onload = function(e) {
+
+    let product = {
+      name: name,
+      price: price,
+      image: e.target.result,
+      stock: stock
+    };
+
+    products.push(product);
+
+    localStorage.setItem("products", JSON.stringify(products));
+
+    displayProducts();
+
+    document.getElementById("name").value = "";
+    document.getElementById("price").value = "";
+    document.getElementById("image").value = "";
+
+  };
+
+  reader.readAsDataURL(image);
+}
+
+function displayProducts() {
+
+  let container = document.getElementById("products");
+
+  container.innerHTML = "";
+
+  products.forEach((product, index) => {
+
+    container.innerHTML += `
+      <div class="product">
+
+        <img src="${product.image}">
+
+        <h3>${product.name}</h3>
+
+        <p>KSh ${product.price}</p>
+
+        <div class="stock ${product.stock === "in" ? "in" : "out"}">
+          ${product.stock === "in" ? "🟢 IN STOCK" : "🔴 OUT OF STOCK"}
+        </div>
+
+        <button class="delete" onclick="deleteProduct(${index})">
+          DELETE
+        </button>
+
+      </div>
+    `;
+
+  });
+
+}
+
+function deleteProduct(index) {
+
+  products.splice(index, 1);
+
+  localStorage.setItem("products", JSON.stringify(products));
+
+  displayProducts();
+
+}
+
+displayProducts();
+</script>
+
+</body>
+</html>
