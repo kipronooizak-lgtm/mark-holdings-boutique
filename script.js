@@ -91,3 +91,11 @@ async function displayProducts() {
 }
 
 displayProducts();
+
+
+// Live updates: refresh the customer catalogue when products change in Supabase.
+db.channel("products-live")
+  .on("postgres_changes", { event: "*", schema: "public", table: "products" }, () => {
+    displayProducts();
+  })
+  .subscribe();
