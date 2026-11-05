@@ -1,149 +1,93 @@
-// MOBILE MENU
+// Mark Holdings Boutique - customer storefront
+// Products are loaded from the shared Supabase database.
+const SUPABASE_URL = "https://ehzqnnvjtmodaqxgenyf.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_87xfOYPzZwJ7Cisdd88c1Q_PdthlQqy";
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// Mobile navigation
 const menuBtn = document.getElementById("menuBtn");
 const nav = document.getElementById("nav");
-
 if (menuBtn && nav) {
-  menuBtn.addEventListener("click", function () {
-    nav.classList.toggle("active");
+  menuBtn.addEventListener("click", () => nav.classList.toggle("active"));
+  document.querySelectorAll("nav a").forEach(link => {
+    link.addEventListener("click", () => nav.classList.remove("active"));
   });
 }
 
-document.querySelectorAll("nav a").forEach(function (link) {
-  link.addEventListener("click", function () {
-    nav.classList.remove("active");
-  });
-});
-
-// PRODUCTS FROM ADMIN PAGE
-const defaultProducts = [
-  {
-    name: "Premium Jeans",
-    description: "Modern and comfortable men's jeans.",
-    price: "2500",
-    image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=1200&auto=format&fit=crop",
-    stock: "in"
-  },
-  {
-    name: "Premium T-Shirt",
-    description: "Comfortable shirts for everyday style.",
-    price: "1500",
-    image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1200&auto=format&fit=crop",
-    stock: "in"
-  },
-  {
-    name: "Luxury Sneakers",
-    description: "Stylish sneakers for every occasion.",
-    price: "4500",
-    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200&auto=format&fit=crop",
-    stock: "in"
-  },
-  {
-    name: "Football Jerseys",
-    description: "Latest jerseys for football lovers.",
-    price: "2000",
-    image: "https://images.unsplash.com/photo-1523398002811-999ca8dec234?q=80&w=1200&auto=format&fit=crop",
-    stock: "in"
-  }
-];
-
-function getProducts() {
-  const saved = localStorage.getItem("products");
-
-  if (saved) {
-    return JSON.parse(saved);
-  }
-
-  return defaultProducts;
-}
-
-function displayProducts() {
-  const container = document.getElementById("product-container");
-
-  if (!container) return;
-
-  const products = getProducts();
-
-  container.innerHTML = "";
-
-  products.forEach(function (product) {
-    const card = document.createElement("div");
-    card.className = "card";
-
-    const imageBox = document.createElement("div");
-    imageBox.className = "image-box";
-
-    const img = document.createElement("img");
-    img.src = product.image;
-    img.alt = product.name;
-
-    imageBox.appendChild(img);
-
-    const content = document.createElement("div");
-    content.className = "card-content";
-
-    const title = document.createElement("h3");
-    title.textContent = product.name;
-
-    const description = document.createElement("p");
-    description.textContent =
-      product.description || "Quality men's fashion.";
-
-    const price = document.createElement("h4");
-    price.textContent = "KSh " + product.price;
-
-    const stock = document.createElement("p");
-    stock.className = "stock-status";
-
-    const button = document.createElement("button");
-    button.className = "order-btn";
-
-    if (product.stock === "in") {
-      stock.textContent = "🟢 IN STOCK";
-      stock.style.color = "#00c853";
-
-      button.textContent = "ORDER NOW";
-
-      button.onclick = function () {
-        orderProduct(product.name, product.price);
-      };
-    } else {
-      stock.textContent = "🔴 OUT OF STOCK";
-      stock.style.color = "#ff4444";
-
-      button.textContent = "OUT OF STOCK";
-      button.disabled = true;
-    }
-
-    content.appendChild(title);
-    content.appendChild(description);
-    content.appendChild(price);
-    content.appendChild(stock);
-    content.appendChild(button);
-
-    card.appendChild(imageBox);
-    card.appendChild(content);
-
-    container.appendChild(card);
-  });
-}
-
-// WHATSAPP ORDER
 function orderProduct(productName, price) {
   const phoneNumber = "254706035845";
+  const message = "Hello Mark Holdings Boutique 👋\n\nI would like to order:\nProduct: " +
+    productName + "\nPrice: KSh " + price;
+  window.open("https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(message), "_blank");
+}
 
-  const message =
-    "Hello Mark Holdings Boutique 👋\n\n" +
-    "I would like to order:\n" +
-    "Product: " + productName + "\n" +
-    "Price: KSh " + price;
+function makeProductCard(product) {
+  const card = document.createElement("div");
+  card.className = "card";
 
-  const whatsappURL =
-    "https://wa.me/" +
-    phoneNumber +
-    "?text=" +
-    encodeURIComponent(message);
+  const imageBox = document.createElement("div");
+  imageBox.className = "image-box";
+  const img = document.createElement("img");
+  img.src = product.image_url || "https://placehold.co/600x600?text=Mark+Holdings";
+  img.alt = product.name || "Boutique product";
+  img.loading = "lazy";
+  imageBox.appendChild(img);
 
-  window.open(whatsappURL, "_blank");
+  const content = document.createElement("div");
+  content.className = "card-content";
+  const title = document.createElement("h3");
+  title.textContent = product.name;
+  const category = document.createElement("p");
+  category.textContent = product.category || "Men's fashion";
+  const description = document.createElement("p");
+  description.textContent = product.description || "Quality men's fashion.";
+  const price = document.createElement("h4");
+  price.textContent = "KSh " + Number(product.price).toLocaleString("en-KE");
+
+  const stock = document.createElement("p");
+  stock.className = "stock-status";
+  const available = Number(product.stock) > 0;
+  stock.textContent = available ? "🟢 IN STOCK (" + product.stock + ")" : "🔴 OUT OF STOCK";
+  stock.style.color = available ? "#00c853" : "#ff4444";
+
+  const button = document.createElement("button");
+  button.className = "order-btn";
+  button.textContent = available ? "ORDER NOW" : "OUT OF STOCK";
+  button.disabled = !available;
+  if (available) button.addEventListener("click", () => orderProduct(product.name, product.price));
+
+  content.append(title, category, description, price, stock, button);
+  card.append(imageBox, content);
+  return card;
+}
+
+async function displayProducts() {
+  const container = document.getElementById("product-container");
+  if (!container) return;
+
+  container.textContent = "Loading products...";
+  const { data, error } = await db
+    .from("products")
+    .select("id,name,category,description,price,stock,image_url,created_at")
+    .order("created_at", { ascending: false });
+
+  container.innerHTML = "";
+  if (error) {
+    const message = document.createElement("p");
+    message.textContent = "Products are temporarily unavailable. Please try again later.";
+    container.appendChild(message);
+    console.error("Supabase products error:", error.message);
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    const message = document.createElement("p");
+    message.textContent = "New products coming soon. Please check back!";
+    container.appendChild(message);
+    return;
+  }
+
+  data.forEach(product => container.appendChild(makeProductCard(product)));
 }
 
 displayProducts();
