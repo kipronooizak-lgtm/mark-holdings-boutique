@@ -56,8 +56,10 @@
           </div>
           <div class="row">
             <input id="stock" type="number" min="0" step="1" placeholder="Quantity in stock" required>
-            <input id="imageUrl" type="url" placeholder="Product image URL (https://...)">
+            <input id="imageUrl" type="url" placeholder="Or paste product image URL (optional)">
           </div>
+          <label for="imageFile" class="muted">Choose product photo (JPG, PNG or WEBP; maximum 5 MB)</label>
+          <input id="imageFile" type="file" accept="image/jpeg,image/png,image/webp">
           <textarea id="description" rows="3" placeholder="Product description"></textarea>
           <button id="saveBtn" type="submit">SAVE PRODUCT</button>
           <button id="cancelEditBtn" class="secondary hidden" type="button">CANCEL EDIT</button>
