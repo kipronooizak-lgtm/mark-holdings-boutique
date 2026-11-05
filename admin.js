@@ -46,6 +46,13 @@ document.getElementById("cancelEditBtn").addEventListener("click", clearForm);
 
 productForm.addEventListener("submit", async event => {
   event.preventDefault();
+  const { data: authData, error: authError } = await db.auth.getUser();
+  if (authError || !authData.user) {
+    showMessage("No valid Supabase login session. Please log out and sign in again.", true);
+    return;
+  }
+  const signedInUserId = authData.user.id;
+  console.log("Authenticated Supabase user ID:", signedInUserId);
   const id = document.getElementById("productId").value;
   const product = {
     name: document.getElementById("name").value.trim(),
@@ -74,7 +81,7 @@ productForm.addEventListener("submit", async event => {
   saveBtn.disabled = false;
 
   if (result.error) {
-    showMessage("Could not save product: " + result.error.message, true);
+    showMessage("Save blocked for user " + signedInUserId + ": " + result.error.message, true);
     return;
   }
   clearForm();
