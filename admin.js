@@ -54,12 +54,33 @@ productForm.addEventListener("submit", async event => {
   const signedInUserId = authData.user.id;
   console.log("Authenticated Supabase user ID:", signedInUserId);
   const id = document.getElementById("productId").value;
+  const imageFile = document.getElementById("imageFile").files[0];
+  let imageUrl = document.getElementById("imageUrl").value.trim() || null;
+  if (imageFile) {
+    if (!["image/jpeg", "image/png", "image/webp"].includes(imageFile.type) || imageFile.size > 5 * 1024 * 1024) {
+      showMessage("Choose a JPG, PNG or WEBP image smaller than 5 MB.", true);
+      return;
+    }
+    showMessage("Uploading product image...");
+    const extension = imageFile.name.split(".").pop().toLowerCase();
+    const filePath = Date.now() + "-" + Math.random().toString(36).slice(2) + "." + extension;
+    const { error: uploadError } = await db.storage.from("product-images").upload(filePath, imageFile, {
+      cacheControl: "3600",
+      upsert: false,
+      contentType: imageFile.type
+    });
+    if (uploadError) {
+      showMessage("Image upload failed: " + uploadError.message, true);
+      return;
+    }
+    imageUrl = db.storage.from("product-images").getPublicUrl(filePath).data.publicUrl;
+  }
   const product = {
     name: document.getElementById("name").value.trim(),
     category: document.getElementById("category").value.trim(),
     price: Number(document.getElementById("price").value),
     stock: Number(document.getElementById("stock").value),
-    image_url: document.getElementById("imageUrl").value.trim() || null,
+    image_url: imageUrl,
     description: document.getElementById("description").value.trim() || null,
     updated_at: new Date().toISOString()
   };
@@ -131,6 +152,7 @@ async function loadProducts() {
       document.getElementById("price").value = product.price;
       document.getElementById("stock").value = product.stock;
       document.getElementById("imageUrl").value = product.image_url || "";
+      document.getElementById("imageFile").value = "";
       document.getElementById("description").value = product.description || "";
       document.getElementById("saveBtn").textContent = "UPDATE PRODUCT";
       document.getElementById("cancelEditBtn").classList.remove("hidden");
