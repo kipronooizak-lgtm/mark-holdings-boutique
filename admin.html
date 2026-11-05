@@ -1,190 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mark Holdings - Admin</title>
-
-<style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #111;
-  color: white;
-  padding: 20px;
-}
-
-h1 {
-  color: #ffd400;
-  text-align: center;
-}
-
-.container {
-  max-width: 500px;
-  margin: auto;
-}
-
-input, select, button {
-  width: 100%;
-  padding: 14px;
-  margin: 8px 0;
-  box-sizing: border-box;
-  border-radius: 8px;
-  border: none;
-  font-size: 16px;
-}
-
-button {
-  background: #ffd400;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.product {
-  background: #222;
-  padding: 15px;
-  margin-top: 15px;
-  border-radius: 10px;
-}
-
-.product img {
-  width: 100%;
-  max-height: 250px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.stock {
-  font-weight: bold;
-  margin: 10px 0;
-}
-
-.in {
-  color: #00ff88;
-}
-
-.out {
-  color: #ff4444;
-}
-
-.delete {
-  background: #ff4444;
-  color: white;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mark Holdings Boutique | Admin</title>
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;padding:22px;font-family:Arial,sans-serif;background:#101010;color:#f5f5f5}
+    .wrap{max-width:850px;margin:0 auto}
+    h1{color:#ffd400;text-align:center;margin-bottom:4px}
+    .sub{text-align:center;color:#bbb;margin-top:0}
+    .panel{background:#1d1d1d;border:1px solid #333;border-radius:12px;padding:20px;margin:18px 0}
+    input,textarea,button{width:100%;padding:13px;margin:7px 0;border-radius:7px;border:1px solid #444;font-size:16px}
+    input,textarea{background:#111;color:#fff}
+    button{background:#ffd400;color:#111;border:0;font-weight:bold;cursor:pointer}
+    button.secondary{background:#444;color:#fff}
+    button.danger{background:#c62828;color:#fff}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .product{border-top:1px solid #444;padding:14px 0;display:grid;grid-template-columns:90px 1fr;gap:14px}
+    .product img{width:90px;height:90px;object-fit:cover;border-radius:8px;background:#333}
+    .product h3{margin:0 0 6px}.muted{color:#bbb;font-size:14px}
+    .actions{display:flex;gap:8px;margin-top:8px}.actions button{margin:0}
+    #message{min-height:22px;color:#ffd400}.hidden{display:none!important}
+    @media(max-width:560px){.row{grid-template-columns:1fr}.product{grid-template-columns:72px 1fr}.product img{width:72px;height:72px}.actions{flex-direction:column}}
+  </style>
 </head>
-
 <body>
+  <main class="wrap">
+    <h1>MARK HOLDINGS</h1>
+    <p class="sub">Boutique administration</p>
+    <p id="message" role="status" aria-live="polite"></p>
 
-<div class="container">
+    <section class="panel" id="loginPanel">
+      <h2>Administrator login</h2>
+      <form id="loginForm">
+        <input id="email" type="email" placeholder="Administrator email" autocomplete="username" required>
+        <input id="password" type="password" placeholder="Password" autocomplete="current-password" required>
+        <button type="submit">LOG IN</button>
+      </form>
+      <p class="muted">Sign in using the administrator account you created in Supabase.</p>
+    </section>
 
-<h1>MARK HOLDINGS</h1>
-<h2>Product Admin</h2>
-
-<input type="text" id="name" placeholder="Product name">
-
-<input type="number" id="price" placeholder="Price in KSh">
-
-<input type="file" id="image" accept="image/*">
-
-<select id="stock">
-  <option value="in">IN STOCK</option>
-  <option value="out">OUT OF STOCK</option>
-</select>
-
-<button onclick="addProduct()">ADD PRODUCT</button>
-
-<h2>Your Products</h2>
-
-<div id="products"></div>
-
-</div>
-
-<script>
-let products = JSON.parse(localStorage.getItem("products")) || [];
-
-function addProduct() {
-
-  let name = document.getElementById("name").value;
-  let price = document.getElementById("price").value;
-  let stock = document.getElementById("stock").value;
-  let image = document.getElementById("image").files[0];
-
-  if (!name || !price || !image) {
-    alert("Please enter product name, price and picture");
-    return;
-  }
-
-  let reader = new FileReader();
-
-  reader.onload = function(e) {
-
-    let product = {
-      name: name,
-      price: price,
-      image: e.target.result,
-      stock: stock
-    };
-
-    products.push(product);
-
-    localStorage.setItem("products", JSON.stringify(products));
-
-    displayProducts();
-
-    document.getElementById("name").value = "";
-    document.getElementById("price").value = "";
-    document.getElementById("image").value = "";
-
-  };
-
-  reader.readAsDataURL(image);
-}
-
-function displayProducts() {
-
-  let container = document.getElementById("products");
-
-  container.innerHTML = "";
-
-  products.forEach((product, index) => {
-
-    container.innerHTML += `
-      <div class="product">
-
-        <img src="${product.image}">
-
-        <h3>${product.name}</h3>
-
-        <p>KSh ${product.price}</p>
-
-        <div class="stock ${product.stock === "in" ? "in" : "out"}">
-          ${product.stock === "in" ? "🟢 IN STOCK" : "🔴 OUT OF STOCK"}
+    <section id="dashboard" class="hidden">
+      <div class="panel">
+        <div class="row">
+          <div><h2>Manage products</h2><p class="muted">Changes are saved to the shared online database.</p></div>
+          <div><button id="logoutBtn" class="secondary" type="button">LOG OUT</button></div>
         </div>
-
-        <button class="delete" onclick="deleteProduct(${index})">
-          DELETE
-        </button>
-
+        <form id="productForm">
+          <input id="productId" type="hidden">
+          <input id="name" type="text" placeholder="Product name" required maxlength="120">
+          <div class="row">
+            <input id="category" type="text" placeholder="Category (Jeans, Shoes, Jerseys...)" required>
+            <input id="price" type="number" min="0" step="0.01" placeholder="Price in KSh" required>
+          </div>
+          <div class="row">
+            <input id="stock" type="number" min="0" step="1" placeholder="Quantity in stock" required>
+            <input id="imageUrl" type="url" placeholder="Product image URL (https://...)">
+          </div>
+          <textarea id="description" rows="3" placeholder="Product description"></textarea>
+          <button id="saveBtn" type="submit">SAVE PRODUCT</button>
+          <button id="cancelEditBtn" class="secondary hidden" type="button">CANCEL EDIT</button>
+        </form>
       </div>
-    `;
 
-  });
+      <div class="panel">
+        <h2>Your products</h2>
+        <div id="productList">Loading products...</div>
+      </div>
+    </section>
+  </main>
 
-}
-
-function deleteProduct(index) {
-
-  products.splice(index, 1);
-
-  localStorage.setItem("products", JSON.stringify(products));
-
-  displayProducts();
-
-}
-
-displayProducts();
-</script>
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="admin.js"></script>
 </body>
 </html>
